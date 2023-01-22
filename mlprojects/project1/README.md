@@ -10,11 +10,12 @@ The goal for this project is to explore the relationship between US personal hea
 ## Our Data
 
 The primary data source for this project comes from historical data provided by Centers for Medicare & Medicaid Services, where the following features were selected for the prediction:
+
 * Year
 * Government Administration and Net Cost of Health Insurance
 * Government Public Health Activities Spending
 
-Specific definitions and additional information can be found [here](https://www.cms.gov/files/document/definitions-sources-and-methods.pdf).
+Specific definitions and additional information can be found [*here*](https://www.cms.gov/files/document/definitions-sources-and-methods.pdf).
 
 ## Analysis
 
@@ -23,21 +24,22 @@ In this project we will use linear regression to model the relationships between
 # Results
 
 ## Raw Data
-[Data for analysis for this project can be found here.](data/health_expenditure.csv)
+[*Data for analysis for this project can be found here.*](https://github.com/bronteee/machine-learning-projects/blob/main/mlprojects/project1/data/health_expenditure.csv)
 
 ## Organizing the Data into Training and Test Set
 
 Before modeling our dataset, we use the train test split utility function to split the data into training and test set with a 0.8 ratio. The result output is shown below.
 
-![Link to train test split screenshot](train_test_split_output.png)
+![Train test split output](train_test_split_output.png)
 
 
 ## Initial Look at the Data
 Here we plot each independent variable against the dependent variable, personal health expenditure, to visualize and hypothesize any potential relationships.
 
-![plot_each_variable](plot_independent_variables.png)
+![Plot for Each Independent Variable](plot_independent_variables.png)
 
 At a first glance at the graphs, one can hypothesize the following:
+
 * Polynomial relationship between year and personal health care expenditure
 * Linear relationship between government administration and cost of health insurance
 * Inverse polynomial relationship between government public health spending and personal health care spending
@@ -68,7 +70,7 @@ Results for linear regression with each feature are shown below:
     Coefficient: [20.97759819]
     Y_intercept: 730.4323987559555
 
-![lr_plot_for_each_variable](plot_lr_each_variable.png)
+![Linear Regression For Each Variable](plot_lr_each_variable.png)
 
 So what does the result tell us about each feature of our dataset?
 Looking at the individual slopes, they all seem to have positive correlation with our dependent variable. However, each has a different R squared value with government administration and insurance cost having the best score - this corresponds with the graph where this feature clearly has the best fitted line.
@@ -103,7 +105,7 @@ As we saw in the first graph `Personal Health Expenditure vs. Year`, the relatio
     Feature: X^3
     Coefficient: -0.004572802177293056
 
-![polynomial_plot_for_year](plot_polynomial_year.png)
+![Polynomial Linear Regression for Year](plot_polynomial_year.png)
 
 As shown above, this resulted in a much higher R squared value and the best fitted line looks very close to our actual data.
 
@@ -146,7 +148,7 @@ We will now apply PCA on our health expenditure dataset. Because we have differe
 
 From the eigenvalues produced, we can calculate that the first eigenvector account for ~93% of the variance. To better understand the correlation between the principal components and our features, we can visualize using a heatmap where each eigenvector represents a principal component:
 
-![pca_components_heatmap](plot_pca_components_heatmap.png)
+![PCA Components vs. Features](plot_pca_components_heatmap.png)
 
 From the heatmap above, we can see that the first component is highly correlated with all three features, and the second component is highly correlated with Government Public Health Activities. The first component is the most important component, and the third component is the least important component. As expected, the first component has generally high correlation from all three features, and the second and the third and mixed signs from each feature, making them less significant.
 
@@ -172,6 +174,7 @@ The `train_test_split_csv` tool in our utility package is repeatable with a seed
 To avoid duplicating code throughout this series of projects, we start defining utility functions and classes and add them to our toolkit. 
 
 So far, we have made the following tools in the `project1.utility` package:
+
 * `linear_regression`
 * `pca`
 * `train_test_split`
@@ -180,6 +183,7 @@ So far, we have made the following tools in the `project1.utility` package:
 # Reflection
 
 In this project, we adopted a linear model, linear regression, to analyze the relationship between features of our dataset and the target variable, `Personal Health Care Expenditure per Capita`. Through splitting data into training and test set, fitting the model and calculating R squared values, examining coefficients, applying principal component analysis, and visualization of results, we have gained deeper understanding in:
+
 *  The structure of the dataset and relationship between dependent and independent variables
 *  Mechanism in which linear regression builds a model from the data
 *  The importance of scaling data with different units/measurements
