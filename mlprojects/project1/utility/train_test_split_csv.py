@@ -11,6 +11,7 @@ from datetime import datetime
 from textwrap import dedent
 from typing import Tuple
 
+
 class TrainTestSplit:
     def __init__(
         self, data_csv: str, split_ratio: float, random_state: Optional[int] = 0
@@ -32,7 +33,7 @@ class TrainTestSplit:
     def data_size(self):
         return self.data.shape[0]
 
-    def train_test_split(self) -> Tuple[pd.DataFrame]:
+    def train_test_split(self, to_csv=True) -> Tuple[pd.DataFrame]:
 
         test_filename, train_filename = self._generate_filenames()
         self.print_metadata(test_filename, train_filename)
@@ -45,8 +46,9 @@ class TrainTestSplit:
 
         test_df = self.data.loc[test_indexes, :]
         train_df = self.data.drop(index=test_indexes)
-        test_df.to_csv(test_filename)
-        train_df.to_csv(train_filename)
+        if to_csv is True:
+            test_df.to_csv(test_filename)
+            train_df.to_csv(train_filename)
         return train_df, test_df
 
     def _generate_filenames(self) -> Tuple[str]:
