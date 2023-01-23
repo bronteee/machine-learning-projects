@@ -1,3 +1,27 @@
+# Dependencies
+The main packages used in this project include:
+
+    sklearn
+    pandas
+    numpy
+    matplotlib
+    pytest
+
+A full list of requirements can be found [here](https://github.com/bronteee/machine-learning-projects/blob/main/mlprojects/requirements.txt).
+
+# Setup and Running Executables
+
+To use `train_test_split_csv.py` in the utility module, run:
+
+    python3 train_test_split_csv.py [-h] csvfile split random_state
+
+To run tests in the project, use:
+
+    pytest <path/to/test_file_name_.py>
+
+The majority of this project is written in Jupyter Notebook, which can be run directly in the `.ipynb` file.
+
+
 # Introduction and Motivation
 As the world is still recovering from the shock of the COVID-19 pandemic, personal health and healthcare has consistently been at the center stage of attention as one of the most difficult problems to solve. 
 
