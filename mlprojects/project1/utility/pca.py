@@ -71,17 +71,26 @@ Eigenvectors: \n{eigenvectors}"""
         )
         return projected
 
-    def transform(self, X: np.ndarray, n_components: int = None) -> np.ndarray:
+    def transform(self, X: np.ndarray, n_components=None) -> np.ndarray:
         assert X.shape[1] == self._eigenvectors.shape[0]
 
         if n_components is None:
             n_components = self._eigenvectors.shape[0]
 
+        eigen_sum = np.sum(self._eigenvalues)
+        if n_components < 1:
+            threshold = n_components
+            n_components = 0
+            percent_variance = 0
+            while percent_variance < threshold:
+                percent_variance += self._eigenvalues[n_components] / eigen_sum
+                n_components += 1
+
         D = X - self.mean
         D = D / self.std
 
         return np.dot(D, self._eigenvectors.T)[:, :n_components]
-    
+
     @property
     def components(self):
         return self._eigenvectors
