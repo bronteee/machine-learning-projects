@@ -28,6 +28,11 @@ To render plots produced by `plotly`, use:
 
 For more details, visit [this plotly page for displaying figures in Python](https://plotly.com/python/renderers/).
 
+The PDF report for this project is created from README.md using
+
+    pandoc README.md -o project2_report.pdf "-fmarkdown-implicit_figures -o"
+    --from=markdown -V geometry:margin=.8in --toc --highlight-style=espresso
+
 ## Introduction
 One of the most important applications of machine learning is in medical research where it becomes extremely helpful to predict clinical outcomes based on test results and measurements.
 
@@ -59,10 +64,12 @@ In `distance.py`, there are a few implementations of the most common distance me
 * Euclidean: 
   
 The formula for Euclidean distance is:
+
 ![Formula for Euclidean Distance between two vectors in n-dimensional space](images/Euclidean%20Distance.png)
 
 When calculating the Euclidean distances for every vector between two matrices, we can simplify the equation for the distance matrix to:
-![General formula for EDM](https://miro.medium.com/max/720/1*6eqyEbgXdY4wlynIpXJD5w.webp)
+
+![General formula for EDM](images/edm_formula.png)
 
 As all of our features for the liver disorder data set are numeric, we choose the Euclidean formula as our distance metric.
 
@@ -70,16 +77,17 @@ As all of our features for the liver disorder data set are numeric, we choose th
 
 Give two vectors A and B, We can visualize the angle between them as theta:
 
-![Angle between A and B](https://miro.medium.com/max/720/1*AqWG1VHnLf8P7_H4KDBwVQ.webp)
+![Angle between A and B](images/cosine_distance.png)
 
 As the name suggests, the cosine distance between two vectors are calculated as follows:
-![Cosine of angle between vector A and B](https://miro.medium.com/max/720/1*LfW66-WsYkFqWc4XYJbEJg.webp)
 
+![Cosine of angle between vector A and B](images/cosine_formula.png)
 
 * Minkowski
 
 With Minkowski distance we can define the order, p, and calculate the distance as:
-![Minkowski distance between X and Y vector in n-dimensional space](https://wikimedia.org/api/rest_v1/media/math/render/svg/91ba4de01dd46e90d647cfa5d48343214bee9e43)
+
+![Minkowski distance between X and Y vector in n-dimensional space](images/minkowski_distance.png)
 
 When p=1, this corresponds to the Manhattan distance and when p=2, this is the same as Euclidean distance.
 
@@ -120,10 +128,12 @@ We can visualize the data sets and look for natural clusters using a scatter plo
 From these graphs one can hypothesize that each of the two data sets have about 6 distinct clusters where data points are close together.
 
 To test this theory, we apply the k-means clustering algorithm and color each point by their cluster label:
+
 ![Scatter plot after k-means for data set 1](images/kmeans_1.png)
 ![Scatter plot after k-means for data set 2](images/kmeans_2.png)
 
 Now we apply a different type of cluster algorithm, complete linkage, a method of hierarchical cluster analysis,  to see if the results might be different.
+
 ![Scatter plot after agglomerative for data set 1](images/scatter_plot3.png)
 ![Scatter plot after agglomerative for data set 2](images/scatter_plot4.png)
 
