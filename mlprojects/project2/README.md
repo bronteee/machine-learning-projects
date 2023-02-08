@@ -1,3 +1,5 @@
+Copyright © 2023 "Bronte" Sihan Li
+
 # CS6140 Project 2: K-NN, PCA, and Clustering
 
 ## Dependencies

@@ -9,6 +9,11 @@ import pandas as pd
 
 
 class PCA:
+
+    """
+    This class implements the principal component analysis algorithm.
+    """
+
     def __init__(self, data: pd.DataFrame) -> None:
         self.data = data
         self.mean = None
