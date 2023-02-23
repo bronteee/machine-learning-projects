@@ -62,18 +62,19 @@ class PCA:
 
         return m, std, eigenvalues, V, pd.DataFrame(projected)
 
-    def do_pca(self, normalize=True) -> pd.DataFrame:
+    def do_pca(self, normalize=True, verbose=False) -> pd.DataFrame:
         mean, std, eigenvalues, eigenvectors, projected = self.pca(
             self.data, normalize=normalize
         )
-        print(
-            dedent(
-                f"""Mean: {mean}
-Standard Deviation: {std}
-Eigenvalues: {eigenvalues}
-Eigenvectors: \n{eigenvectors}"""
+        if verbose:
+            print(
+                dedent(
+                    f"""Mean: {mean}
+    Standard Deviation: {std}
+    Eigenvalues: {eigenvalues}
+    Eigenvectors: \n{eigenvectors}"""
+                )
             )
-        )
         return projected
 
     def transform(self, X: np.ndarray, n_components=None) -> np.ndarray:
@@ -98,4 +99,20 @@ Eigenvectors: \n{eigenvectors}"""
 
     @property
     def components(self):
+        """
+        Returns the principal components
+        """
         return self._eigenvectors
+
+    @property
+    def principal_components(self) -> int:
+        """
+        Returns number of principal components to explain 90% of variance
+        """
+        eigen_sum = np.sum(self._eigenvalues)
+        n_components = 0
+        percent_variance = 0
+        while percent_variance < 0.90:
+            percent_variance += self._eigenvalues[n_components] / eigen_sum
+            n_components += 1
+        return n_components
