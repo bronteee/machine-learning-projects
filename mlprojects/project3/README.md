@@ -93,6 +93,7 @@ As we can see from the output of value ranges of each variable, we have a mixtur
     Name: ST_Slope, dtype: int64
 
 There are a few observations we can draw:
+
 * There are some missing values (0) in `RestingBP` and `Cholesterol`
 * `FastingBS` is a categorical feature
 * Each numerical feature is on a different scale
@@ -121,7 +122,7 @@ To convert our categorical columns into more easily analyzable values, we apply 
 ![PCA](images/PCA.png)
 
 
-* How many significant signals exist in the independent variables?
+*How many significant signals exist in the independent variables?*
 
 After PCA, we can calculate the number of components that account for 90% of the variance, and here is the result:
     The number of principal components to explain 90% of the variance is 12
@@ -255,7 +256,15 @@ Looking at the bias and variance, each model has relatively low variance but the
 
 Now, let's see if we can make our random forest classifier better - first, we can take a look at the current hyper-parameters:
 
-    {'bootstrap': True, 'ccp_alpha': 0.0, 'class_weight': None, 'criterion': 'entropy', 'max_depth': 100, 'max_features': 'auto', 'max_leaf_nodes': None, 'max_samples': None, 'min_impurity_decrease': 0.0, 'min_samples_leaf': 1, 'min_samples_split': 2, 'min_weight_fraction_leaf': 0.0, 'n_estimators': 100, 'n_jobs': None, 'oob_score': False, 'random_state': 42, 'verbose': 0, 'warm_start': False}
+    {'bootstrap': True, 'ccp_alpha': 0.0, 'class_weight': None, 'criterion': 'entropy', 
+    
+    'max_depth': 100, 'max_features': 'auto', 'max_leaf_nodes': None, 'max_samples': None, 
+    
+    'min_impurity_decrease': 0.0, 'min_samples_leaf': 1, 'min_samples_split': 2, 
+    
+    'min_weight_fraction_leaf': 0.0, 'n_estimators': 100, 'n_jobs': None, 'oob_score': 
+    
+    False, 'random_state': 42, 'verbose': 0, 'warm_start': False}
 
 First, we can use a random search cross validation to explore different hyperparameter combinations like the following:
 
@@ -285,7 +294,9 @@ Here is the classification report for our randomly selected best classifier:
 
 And the best parameters are:
 
-    {'n_estimators': 200, 'min_samples_split': 10, 'min_samples_leaf': 4, 'max_features': 'auto', 'max_depth': 50, 'criterion': 'gini', 'bootstrap': True}
+    {'n_estimators': 200, 'min_samples_split': 10, 'min_samples_leaf': 4,
+    
+    'max_features': 'auto', 'max_depth': 50, 'criterion': 'gini', 'bootstrap': True}
 
 Now that we have reduced our search space, we can define a smaller set of hyper-parameters and use grid search. 
 
