@@ -1,0 +1,2 @@
+loss,accuracy,time_this_iter_s,should_checkpoint,done,timesteps_total,episodes_total,training_iteration,trial_id,experiment_id,date,timestamp,time_total_s,pid,hostname,node_ip,time_since_restore,timesteps_since_restore,iterations_since_restore,warmup_time
+0.7209940155347189,0.5121813031161473,100.54860973358154,True,True,,,1,f7641_00035,1b2924db4061408c9761225c4a15754f,2023-04-03_11-01-38,1680544898,100.54860973358154,1443,MacBook-Pro-2,127.0.0.1,100.54860973358154,0,1,0.0022809505462646484

@@ -1,9 +1,7 @@
 # Copyright © 2023 "Bronte" Sihan Li
 
-import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import pandas as pd
 from typing import Literal
 from dataclasses import dataclass
 
@@ -158,27 +156,6 @@ class LinearNN(nn.Module):
         return x
 
 
-class Stock2DDataset(torch.utils.data.Dataset):
-    def __init__(self, X: pd.DataFrame, y: pd.DataFrame, transform=None):
-        self.X = X
-        self.y = y
-        self.transform = transform
-
-    def __len__(self):
-        return len(self.X)
-
-    def __getitem__(self, idx):
-        if idx < 10:
-            x = torch.from_numpy(self.X.iloc[0:10].to_numpy()).float()
-        else:
-            x = torch.from_numpy(self.X.iloc[(idx - 10) : idx].to_numpy()).float()
-        x = x.view(1, 10, -1)
-        y = torch.from_numpy(self.y.iloc[idx].to_numpy()).float()
-        if self.transform:
-            x = self.transform(x)
-        return x, y
-
-
 class StockCNN(nn.Module):
     def __init__(self, l1, l2, kernel_size=5) -> None:
         super().__init__()
@@ -187,11 +164,9 @@ class StockCNN(nn.Module):
 
         self.kernel_size = kernel_size
 
-        # We are using 10 days of data to predict the next day's price.
-
         # Define convolutional layers
         self.conv1 = nn.Conv2d(1, 10, kernel_size=self.kernel_size, padding='same')
-        self.conv2 = nn.Conv2d(10, 20, kernel_size=self.kernel_size, padding='same')
+        self.conv2 = nn.Conv2d(10, 20, kernel_size=self.kernel_size)
         self.conv3 = nn.Conv2d(20, 40, kernel_size=self.kernel_size)
         self.conv3_drop = nn.Dropout2d(p=0.3)
 
@@ -215,6 +190,41 @@ class StockCNN(nn.Module):
         x = activation(self.fc1(x))
         x = F.dropout(x, training=self.training, p=0.3)
         x = self.fc2(x)
+        x = self.fc3(x)
+        x = self.sigmoid(x)
+        return x
+
+
+class StockLinearNN(nn.Module):
+    """
+    Defines the neural network architecture for the linear model
+    for the stock dataset.
+    """
+
+    def __init__(
+        self,
+        l2: int = 3,  # number of nodes in the second fully connected layer
+        l3: int = 3,  # number of nodes in the third fully connected layer
+    ):
+        super(StockLinearNN, self).__init__()
+        self.l2 = l2
+        self.l3 = l3
+        self.fc1 = nn.LazyLinear(out_features=self.l2)
+        self.activation = nn.ReLU()
+        self.fc2 = nn.Linear(self.l2, self.l3)
+        self.fc3 = nn.Linear(self.l3, 5)
+        # Since we are doing multi-label classification, we use sigmoid as the
+        # activation function for the last layer.
+        self.sigmoid = nn.Sigmoid()
+
+    def forward(self, x):
+        """
+        Defines the forward pass functions of the neural network.
+        """
+        x = self.fc1(x)
+        x = self.activation(x)
+        x = self.fc2(x)
+        x = self.activation(x)
         x = self.fc3(x)
         x = self.sigmoid(x)
         return x

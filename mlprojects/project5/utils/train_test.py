@@ -3,7 +3,6 @@
 from typing import Literal
 import torch
 import torchvision
-import torch.nn.functional as F
 from torch.utils.data import DataLoader, random_split
 from torch.utils.data.dataloader import default_collate
 import torch.optim as optim
